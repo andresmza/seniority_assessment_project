@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,11 +29,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     })->name('subjects');
 
     Route::get('/teachers', function () {
-        return view('teachers');
+        return view('teachers.index');
     })->name('teachers');
 
     Route::get('/students', function () {
         return view('students');
     })->name('students');
+
+    Route::resource('/courses', CourseController::class)->names('courses')->names('courses');
 
 });

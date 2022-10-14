@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('lastname')->after('name');
+            $table->integer('dni')->after('lastname');
             $table->boolean('status')->after('password');
         });
     }
@@ -28,6 +29,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('lastname');
+            $table->dropColumn('dni');
             $table->dropColumn('status');
         });
     }

@@ -27,8 +27,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'lastname',
+        'dni',
         'email',
         'password',
+        'status',
     ];
 
     /**
@@ -60,4 +63,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //uno a muchos
+    public function courses_dictated(){
+        return $this->hasMany(Course::class);
+    }
+
+    //muchos a muchos
+    public function courses_enrolled(){
+        return $this->belongsToMany(Course::class)->withPivot('final_calification')->withTimestamps();
+    }
+
 }
