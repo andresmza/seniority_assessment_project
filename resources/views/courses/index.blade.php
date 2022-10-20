@@ -32,8 +32,10 @@
                                 <th>1</th>
                                 <td>Cy Ganderton</td>
                                 <td>Quality Control Specialist</td>
-                                <td><label for="my-modal" data-teacher-id="1"
-                                        class="btn modal-button open-modal">Show</label></td>
+                                <td>
+                                <label for="my-modal" data-teacher-id="1" class="btn btn-outline modal-button open-modal" onclick="showSubject(1);"><x-icon name="eye" /></label>
+                                <label for="my-modal" data-teacher-id="1" class="btn btn-outline modal-button open-modal"><x-icon name="pencil-square" style="color: green;" /></label>
+                                <label for="my-modal" data-teacher-id="1" class="btn btn-outline modal-button open-modal"><x-icon name="trash" style="color: red;"/></label></td>
                             </tr>
                             <!-- row 2 -->
                             <tr>
@@ -115,6 +117,5 @@
 
     function showModal(teacherId) {
         console.log('Teacher -> :' + teacherId)
-
     }
 </script>

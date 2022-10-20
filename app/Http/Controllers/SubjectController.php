@@ -14,7 +14,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        return view('subjects/index', [
+            'subjects' => Subject::all(),
+        ]);
     }
 
     /**
@@ -24,7 +26,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('subjects/create');
     }
 
     /**
@@ -35,7 +37,20 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+            'name' => 'required|unique:subjects|max:255',
+            'description' => 'required|max:255',
+            'price' => 'required|regex:/^\d*(\.\d{2})?$/',
+            'duration' => 'required|regex:/^[1-9](\d*)$/',
+        ]);
+
+        Subject::create($request->except('_token'));
+
+        return view('subjects/index', [
+            'subjects' => Subject::all(),
+        ]);
+
     }
 
     /**
@@ -46,7 +61,14 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        //
+        // dd($subject);
+        // $subject = Subject::where('id', $subject)->first();
+        if($subject){
+            return response()->json($subject,200);
+        }else{
+            return response()->json(['message' => 'No subject found.'],400);
+        }
+        
     }
 
     /**
@@ -57,7 +79,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        //
+        return view('subjects.edit', compact('subject'));
     }
 
     /**
@@ -69,7 +91,16 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255|unique:subjects,name,'. $subject->id,
+            'description' => 'required|max:255',
+            'price' => 'required|regex:/^\d*(\.\d{2})?$/',
+            'duration' => 'required|regex:/^[1-9](\d*)$/',
+        ]);
+
+        $subject->update($request->all());
+
+        return redirect()->route('subjects.index')->with('info', 'Subject updated successfully.');
     }
 
     /**
@@ -80,6 +111,13 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        $subject->delete();
+
+        if($subject){
+            return response()->json($subject,200);
+        }else{
+            return response()->json(['message' => 'No subject found.'],400);
+        }
     }
+    
 }
