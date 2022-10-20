@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('lastname')->after('name');
             $table->integer('dni')->after('lastname');
-            $table->boolean('status')->after('password');
+            $table->boolean('status')->after('password')->default(1);
         });
     }
 

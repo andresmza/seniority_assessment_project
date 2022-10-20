@@ -1,5 +1,5 @@
 <!-- Put this part before </body> tag -->
-<input type="checkbox" id="create-subject" class="modal-toggle" @if ($errors->any()) checked @endif />
+<input type="checkbox" id="createSubject" class="modal-toggle" @if ($errors->any()) checked @endif />
 <div class="modal">
     <div class="modal-box">
         <h3 class="font-bold text-lg">Create teacher</h3>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="modal-action">
-                <label for="create-subject" class="btn btn-error">Cancel </label>
+                <label for="createSubject" class="btn btn-error">Cancel </label>
                 <button type="submit" class="btn bg-slate-900">Save </button>
             </div>
         </form>

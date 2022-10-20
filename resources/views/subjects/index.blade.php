@@ -15,7 +15,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-                    <label for="create-subject" class="btn modal-open">Create subject</label>
+                    <label for="createSubject" class="btn modal-open">Create subject</label>
                     
                 </div>
                 <div class="overflow-x-auto mx-6 mb-4">

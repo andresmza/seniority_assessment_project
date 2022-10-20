@@ -43,9 +43,19 @@ class TeacherController extends Controller
             'lastname' => 'required|max:255',
             'dni' => 'required|regex:/^[1-9](\d{6,7})$/',
             'email' => 'required|email|unique:users',
+            'password' => 'required|max:255|min:6',
+            'retypepassword' => 'required|max:255|min:6|same:password',
         ]);
 
-        User::create($request->except('_token'));
+        $teacher = User::create([
+            'name' => $request->name ,
+            'lastname' => $request->lastname ,
+            'dni' => $request->dni ,
+            'email' => $request->email ,
+            'password' => bcrypt($request->password) ,
+        ]);
+
+        $teacher->assignRole('Teacher');
 
         return view('teachers/index', [
             'teachers' => User::role('teacher')->get(),

@@ -1,12 +1,12 @@
 <!-- Put this part before </body> tag -->
-<input type="checkbox" id="create-subject" class="modal-toggle" @if ($errors->any()) checked @endif />
+<input type="checkbox" id="createTeacher" class="modal-toggle" @if ($errors->any()) checked @endif />
 <div class="modal">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">Create subject</h3>
+        <h3 class="font-bold text-lg">Create teacher</h3>
 
 
 
-        <form action="{{ route('subjects.store') }}" method="post">
+        <form action="{{ route('teachers.store') }}" method="post">
             @csrf
             <div class="form-control">
                 <label class="label">
@@ -18,42 +18,64 @@
             @error('name')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
-
+            
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text"><b>Description</b></span>
-                    {{-- <span class="label-text-alt">Alt label</span> --}}
+                    <span class="label-text"><b>Lastname</b></span>
                 </label>
-                <textarea class="textarea textarea-bordered h-24" name="description" placeholder="Description">{{ old('description') }}</textarea>
+                <input type="text" placeholder="Lastname" name="lastname" value="{{ old('lastname') }}"
+                    class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
             </div>
-            @error('description')
+            @error('lastname')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
 
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text"><b>Price</b></span>
+                    <span class="label-text"><b>DNI</b></span>
                 </label>
-                <input type="number" placeholder="Price" name="price" value="{{ old('price') }}" step="0.01"
+                <input type="number" placeholder="DNI" name="dni" value="{{ old('dni') }}" step="0.01"
                     class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
             </div>
-            @error('price')
+            @error('dni')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
 
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text"><b>Duration</b></span>
+                    <span class="label-text"><b>Email</b></span>
                 </label>
-                <input type="number" placeholder="Duration (months)" name="duration" value="{{ old('duration') }}"
+                <input type="text" placeholder="Email" name="email" value="{{ old('email') }}"
                     class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
-                @error('duration')
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text"><b>Password</b></span>
+                </label>
+                <input type="password" placeholder="Password" name="password" value=""
+                    class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
+                @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text"><b>Retype password</b></span>
+                </label>
+                <input type="password" placeholder="Retype password" name="retypepassword" value=""
+                    class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
+                @error('retypepassword')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="modal-action">
-                <label for="create-subject" class="btn btn-error">Cancel </label>
+                <label for="createTeacher" class="btn btn-error">Cancel </label>
                 <button type="submit" class="btn bg-slate-900">Save </button>
             </div>
         </form>

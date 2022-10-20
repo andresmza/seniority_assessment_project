@@ -15,7 +15,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-                    <label for="create-teacher" class="btn modal-open">Create teacher</label>
+                    <label for="createTeacher" class="btn modal-open">Create teacher</label>
                     
                 </div>
                 <div class="overflow-x-auto mx-6 mb-4">
@@ -91,7 +91,7 @@
 </div>
 
 @include('teachers/modal-create')
-@include('teachers/modal-edit')
+{{-- @include('teachers/modal-edit') --}}
 
 <script>
     const _token = "{{ csrf_token() }}";
