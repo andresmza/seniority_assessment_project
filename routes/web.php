@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +42,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     Route::resource('/courses', CourseController::class)->names('courses');
     Route::resource('/subjects', SubjectController::class)->names('subjects');
+    Route::resource('/teachers', TeacherController::class)->names('teachers');
+    Route::resource('/students', StudentController::class)->names('students');
 
     Route::get('subjects/list', [SubjectController::class, 'list' ]);
 

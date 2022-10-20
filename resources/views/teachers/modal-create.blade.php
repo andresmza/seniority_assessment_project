@@ -2,7 +2,7 @@
 <input type="checkbox" id="create-subject" class="modal-toggle" @if ($errors->any()) checked @endif />
 <div class="modal">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">Create teacher</h3>
+        <h3 class="font-bold text-lg">Create subject</h3>
 
 
 
@@ -21,12 +21,12 @@
 
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text"><b>Lastname</b></span>
+                    <span class="label-text"><b>Description</b></span>
                     {{-- <span class="label-text-alt">Alt label</span> --}}
                 </label>
-                <textarea class="textarea textarea-bordered h-24" name="lastaname" placeholder="Lastname">{{ old('lastname') }}</textarea>
+                <textarea class="textarea textarea-bordered h-24" name="description" placeholder="Description">{{ old('description') }}</textarea>
             </div>
-            @error('lastname')
+            @error('description')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
 

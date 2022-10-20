@@ -102,7 +102,7 @@ return [
     'min_digits' => 'The :attribute must have at least :min digits.',
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
-    'not_regex' => 'The :attribute format is invalid.',
+    'not_regex' => 'The :attribute is invalid.',
     'numeric' => 'The :attribute must be a number.',
     'password' => [
         'letters' => 'The :attribute must contain at least one letter.',
@@ -116,7 +116,7 @@ return [
     'prohibited_if' => 'The :attribute field is prohibited when :other is :value.',
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
-    'regex' => 'The :attribute format is invalid.',
+    'regex' => 'The :attribute is invalid.',
     'required' => 'The :attribute field is required.',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
