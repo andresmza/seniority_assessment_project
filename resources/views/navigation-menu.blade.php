@@ -18,7 +18,7 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses')">
+                    <x-jet-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses.index')">
                         {{ __('Courses') }}
                     </x-jet-nav-link>
                 </div>
@@ -28,12 +28,12 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('teachers') }}" :active="request()->routeIs('teachers')">
+                    <x-jet-nav-link href="{{ route('teachers.index') }}" :active="request()->routeIs('teachers.index')">
                         {{ __('Teachers') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">
+                    <x-jet-nav-link href="{{ route('students.index') }}" :active="request()->routeIs('students.index')">
                         {{ __('Students') }}
                     </x-jet-nav-link>
                 </div>
@@ -162,6 +162,28 @@
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
         </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses.index')">
+                {{ __('Courses') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('subjects.index') }}" :active="request()->routeIs('subjects.index')">
+                {{ __('Subjects') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('teachers.index') }}" :active="request()->routeIs('teachers.index')">
+                {{ __('Teachers') }}
+            </x-jet-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-jet-responsive-nav-link href="{{ route('students.index') }}" :active="request()->routeIs('students.index')">
+                {{ __('Students') }}
+            </x-jet-responsive-nav-link>
+        </div>
+
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
