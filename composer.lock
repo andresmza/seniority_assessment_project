@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed615b813d2fbd681680976d0c7537b4",
+    "content-hash": "1acdbc68e039bf938b27a9261d217756",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -115,6 +115,68 @@
                 }
             ],
             "time": "2022-08-10T22:54:19+00:00"
+        },
+        {
+            "name": "cmixin/enhanced-period",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kylekatarnls/enhanced-period.git",
+                "reference": "fa656c45cd33d358f4cea511419cae0a80988335"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kylekatarnls/enhanced-period/zipball/fa656c45cd33d358f4cea511419cae0a80988335",
+                "reference": "fa656c45cd33d358f4cea511419cae0a80988335",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.23.0-beta.1 || ^3.0@dev || ^4.0@dev",
+                "php": "^7.2 || ^8.0",
+                "spatie/period": "^1.4.3 || ^2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.14 || ^9.3.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "EnhancedPeriod\\Laravel\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KyleKatarn",
+                    "email": "carbon@selfbuild.fr"
+                }
+            ],
+            "description": "Carbon mixin to convert `Carbon\\CarbonPeriod` to `Spatie\\Period\\Period` and vice versa",
+            "support": {
+                "issues": "https://github.com/kylekatarnls/enhanced-period/issues",
+                "source": "https://github.com/kylekatarnls/enhanced-period/tree/1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/Carbon",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/nesbot/carbon",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-04-08T21:37:19+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -3534,6 +3596,59 @@
                 }
             ],
             "time": "2022-06-29T23:11:42+00:00"
+        },
+        {
+            "name": "spatie/period",
+            "version": "2.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/period.git",
+                "reference": "83fca442d96bcf245109fd0e8fba0f1efeb380d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/period/zipball/83fca442d96bcf245109fd0e8fba0f1efeb380d4",
+                "reference": "83fca442d96bcf245109fd0e8fba0f1efeb380d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "nesbot/carbon": "^2.54",
+                "phpunit/phpunit": "^9.5",
+                "spatie/ray": "^1.31"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Period\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Complex period comparisons",
+            "homepage": "https://github.com/spatie/period",
+            "keywords": [
+                "period",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/period/issues",
+                "source": "https://github.com/spatie/period/tree/2.3.5"
+            },
+            "time": "2022-10-03T07:32:05+00:00"
         },
         {
             "name": "symfony/console",

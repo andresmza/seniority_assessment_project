@@ -1,4 +1,4 @@
-<!-- Put this part before </body> tag -->
+{{-- <!-- Put this part before </body> tag -->
 <input type="checkbox" id="editSubject" class="modal-toggle" @if ($errors->any()) checked @endif />
 <div class="modal">
     <div class="modal-box">
@@ -58,4 +58,4 @@
             </div>
         </form>
     </div>
-</div>
+</div> --}}

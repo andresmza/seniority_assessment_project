@@ -41,7 +41,7 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function show(Payment $payment)
@@ -52,7 +52,7 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Models\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function edit(Payment $payment)
@@ -64,7 +64,7 @@ class PaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Payment $payment)
@@ -75,7 +75,7 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Payment $payment)

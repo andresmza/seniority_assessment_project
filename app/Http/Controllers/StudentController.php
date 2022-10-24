@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -13,7 +14,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        return view('students/index', [
+            'students' => User::role('student')->get(),
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('students/create');
     }
 
     /**
@@ -34,51 +37,100 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'dni' => 'required|regex:/^[1-9](\d{6,7})$/',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|max:255|min:6',
+            'retypepassword' => 'required|max:255|min:6|same:password',
+        ]);
+
+        $student = User::create([
+            'name' => $request->name ,
+            'lastname' => $request->lastname ,
+            'dni' => $request->dni ,
+            'email' => $request->email ,
+            'password' => bcrypt($request->password) ,
+        ]);
+
+        $student->assignRole('Student');
+
+        return view('students/index', [
+            'students' => User::role('student')->get(),
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $student)
     {
-        //
+        // dd($student);
+        // $student = Student::where('id', $student)->first();
+        if ($student) {
+            return response()->json($student, 200);
+        } else {
+            return response()->json(['message' => 'No student found.'], 400);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $student)
     {
-        //
+        if($student->hasRole('student')) {
+            return view('students.edit', compact('student'));
+        } else {
+            return view('students/index', [
+                'students' => User::role('student')->get(),
+            ]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $student)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'dni' => 'required|regex:/^[1-9](\d{6,7})$/',
+            'email' => 'required|email|unique:users,email,' . $student->id,
+        ]);
+
+        $student->update($request->all());
+
+        return redirect()->route('students.index')->with('info', 'Student updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $student)
     {
-        //
+        $student->delete();
+
+        if ($student) {
+            return response()->json($student, 200);
+        } else {
+            return response()->json(['message' => 'No student found.'], 400);
+        }
     }
 }

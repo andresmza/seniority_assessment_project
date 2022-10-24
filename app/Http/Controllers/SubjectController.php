@@ -45,6 +45,13 @@ class SubjectController extends Controller
             'duration' => 'required|regex:/^[1-9](\d*)$/',
         ]);
 
+        $validated = $request->validate([
+            'name' => 'required|max:255|unique:subjects,name,'. $subject->id,
+            'description' => 'required|max:255',
+            'price' => 'required|regex:/^\d*(\.\d{2})?$/',
+            'duration' => 'required|regex:/^[1-9](\d*)$/',
+        ]);
+
         Subject::create($request->except('_token'));
 
         return view('subjects/index', [
@@ -56,7 +63,7 @@ class SubjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Subject  $subject
+     * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
     public function show(Subject $subject)
@@ -74,7 +81,7 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Models\Subject  $subject
+     * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
     public function edit(Subject $subject)
@@ -86,7 +93,7 @@ class SubjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Subject  $subject
+     * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Subject $subject)
@@ -106,7 +113,7 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Subject  $subject
+     * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Http\Response
      */
     public function destroy(Subject $subject)

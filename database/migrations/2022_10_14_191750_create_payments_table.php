@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('course_user_id');
             $table->float('amount');
             
-            $table->foreign('course_user_id')->references('id')->on('course_user');
+            $table->foreign('course_user_id')->references('id')->on('course_users');
 
             $table->timestamps();
         });

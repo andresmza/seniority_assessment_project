@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\CarbonPeriod;
+// use Cmixin\EnhancedPeriod;
 
 class TeacherController extends Controller
 {
@@ -14,9 +16,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('teachers/index', [
-            'teachers' => User::role('teacher')->get(),
-        ]);
+        //
     }
 
     /**
@@ -65,7 +65,7 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Teacher  $teacher
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
     public function show(User $teacher)
@@ -82,7 +82,7 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Models\Teacher  $teacher
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
     public function edit(User $teacher)
@@ -100,7 +100,7 @@ class TeacherController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Teacher  $teacher
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $teacher)
@@ -120,7 +120,7 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Teacher  $teacher
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $teacher)

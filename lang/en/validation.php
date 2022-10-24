@@ -169,6 +169,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'retypepassword' => 'retype password',
+    ],
 
 ];

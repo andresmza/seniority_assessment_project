@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\CourseUser;
+use App\Models\Models\CourseUser as ModelsCourseUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,14 +66,16 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    //uno a muchos
     public function courses_dictated(){
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Course::class, 'teacher_id');
     }
 
-    //muchos a muchos
-    public function courses_enrolled(){
-        return $this->belongsToMany(Course::class)->withPivot('final_calification')->withTimestamps();
+    public function courses(){
+        return $this->hasMany(CourseUser::class);
+    }
+
+    public function payments_made(){
+        return $this->hasManyThrough(Payment::class, CourseUser::class, 'user_id', 'course_user_id');
     }
 
 }
