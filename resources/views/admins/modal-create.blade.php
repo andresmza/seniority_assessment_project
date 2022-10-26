@@ -1,12 +1,12 @@
 <!-- Put this part before </body> tag -->
-<input type="checkbox" id="createTeacher" class="modal-toggle" @if ($errors->any()) checked @endif />
+<input type="checkbox" id="createAdmin" class="modal-toggle" @if ($errors->any()) checked @endif />
 <div class="modal">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">Create teacher</h3>
+        <h3 class="font-bold text-lg">Create admin</h3>
 
 
 
-        <form action="{{ route('teachers.store') }}" method="post">
+        <form action="{{ route('admins.store') }}" method="post">
             @csrf
             <div class="form-control">
                 <label class="label">
@@ -75,7 +75,7 @@
             </div>
 
             <div class="modal-action">
-                <label for="createTeacher" class="btn btn-error">Cancel </label>
+                <label for="createStudent" class="btn btn-error">Cancel </label>
                 <button type="submit" class="btn bg-slate-900">Save </button>
             </div>
         </form>

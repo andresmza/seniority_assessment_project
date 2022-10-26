@@ -44,7 +44,7 @@ class StudentController extends Controller
             'dni' => 'required|regex:/^[1-9](\d{6,7})$/',
             'email' => 'required|email|unique:users',
             'password' => 'required|max:255|min:6',
-            'retypepassword' => 'required|max:255|min:6|same:password',
+            'confirm_password' => 'required|max:255|min:6|same:password',
         ]);
 
         $student = User::create([

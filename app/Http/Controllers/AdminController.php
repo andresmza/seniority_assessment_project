@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\CarbonPeriod;
 // use Cmixin\EnhancedPeriod;
 
-class TeacherController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('teachers/index', [
-            'teachers' => User::role('teacher')->get(),
+        return view('admins/index', [
+            'admins' => User::role('admin')->get(),
         ]);
     }
 
@@ -28,7 +28,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('teachers/create');
+        return view('admins/create');
     }
 
     /**
@@ -49,7 +49,7 @@ class TeacherController extends Controller
             'confirm_password' => 'required|max:255|min:6|same:password',
         ]);
 
-        $teacher = User::create([
+        $admin = User::create([
             'name' => $request->name ,
             'lastname' => $request->lastname ,
             'dni' => $request->dni ,
@@ -57,43 +57,40 @@ class TeacherController extends Controller
             'password' => bcrypt($request->password) ,
         ]);
 
-        $teacher->assignRole('Teacher');
+        $admin->assignRole('Admin');
 
-        return view('teachers/index', [
-            'teachers' => User::role('teacher')->get(),
-        ]);
+        return redirect()->route('admins.index')->withInfo('Admin created successfully.');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(User $teacher)
+    public function show(User $admin)
     {
-        // dd($teacher);
-        // $teacher = Teacher::where('id', $teacher)->first();
-        if ($teacher) {
-            return response()->json($teacher, 200);
+        if ($admin) {
+            return response()->json($admin, 200);
         } else {
-            return response()->json(['message' => 'No teacher found.'], 400);
+            return response()->json(['message' => 'No admin found.'], 400);
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $teacher)
+    public function edit(User $admin)
     {
-        if($teacher->hasRole('teacher')) {
-            return view('teachers.edit', compact('teacher'));
+        if($admin->hasRole('admin')) {
+            return view('admins.edit', compact('admin'));
         } else {
-            return view('teachers/index', [
-                'teachers' => User::role('teacher')->get(),
+            return view('admins/index', [
+                'admins' => User::role('admin')->get(),
             ]);
         }
     }
@@ -102,37 +99,39 @@ class TeacherController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Teacher  $teacher
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $teacher)
+    public function update(Request $request, User $admin)
     {
         $validated = $request->validate([
             'name' => 'required|max:255',
             'lastname' => 'required|max:255',
             'dni' => 'required|regex:/^[1-9](\d{6,7})$/',
-            'email' => 'required|email|unique:users,email,' . $teacher->id,
+            'email' => 'required|email|unique:users,email,' . $admin->id,
         ]);
 
-        $teacher->update($request->all());
+        $admin->update($request->all());
 
-        return redirect()->route('teachers.index')->with('info', 'Teacher updated successfully.');
+        return redirect()->route('admins.index')->withInfo('Admin updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $teacher)
+    public function destroy(User $admin)
     {
-        $teacher->delete();
+        $admin->delete();
 
-        if ($teacher) {
-            return response()->json($teacher, 200);
-        } else {
-            return response()->json(['message' => 'No teacher found.'], 400);
+        if ($admin) {
+        // return redirect()->route('admins.index')->withInfo('Admin deleted successfully.');
+        return response()->json($admin, 200);
+    } else {
+            // return redirect()->route('admins.index')->withError('An error occurred while deleting user.');
+            return response()->json(['message' => 'No admin found.'], 400);
         }
     }
 }

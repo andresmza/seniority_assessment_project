@@ -11,6 +11,8 @@ class Course extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function subject(){
         return $this->belongsTo(Subject::class);
     }
@@ -21,7 +23,7 @@ class Course extends Model
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
-    public function users(){
+    public function students(){
         return $this->hasMany(CourseUser::class);
     }
 

@@ -65,11 +65,11 @@
             
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text"><b>Retype password</b></span>
+                    <span class="label-text"><b>Confirm password</b></span>
                 </label>
-                <input type="password" placeholder="Retype password" name="retypepassword" value=""
+                <input type="password" placeholder="Confirm password" name="confirm_password" value=""
                     class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
-                @error('retypepassword')
+                @error('confirm_password')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -43,10 +45,10 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     Route::resource('/courses', CourseController::class)->names('courses');
     Route::resource('/subjects', SubjectController::class)->names('subjects');
+    Route::resource('/admins', AdminController::class)->names('admins');
     Route::resource('/teachers', TeacherController::class)->names('teachers');
     Route::resource('/students', StudentController::class)->names('students');
-    Route::resource('/settings', SettingsController::class)->names('settings');
-
-    // Route::get('subjects/list', [SubjectController::class, 'list' ]);
+    Route::resource('/settings', SettingsController::class)->only('index', 'update')->names('settings');
+    Route::resource('/payments', PaymentController::class)->names('payments');
 
 });

@@ -9,7 +9,7 @@
 
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-                <h1><b>Global settings</b></h1>
+                <h1><b>Settings</b></h1>
                 <form action="{{ route('settings.update', $settings->id) }}" method="post">
                     @method('PUT')
                     @csrf
@@ -51,9 +51,6 @@
                     </div>
 
                     <div class="modal-action">
-                        {{-- <a href="/settings"><button class="btn btn-error">
-                            Cancel
-                        </button></a> --}}
                         <button type="submit" class="btn bg-slate-900">Save </button>
                     </div>
                 </form>
@@ -65,12 +62,12 @@
 
 @if (session('info'))
     <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '<h3>{{ session('info') }}</h3>',
-            showConfirmButton: false,
-            timer: 1500
-        })
+        toastr['success']('{{session('info')}}');
     </script>
+@endif
+
+@if ($errors->any())
+<script>
+    toastr['error']('An error occurred while saving the data. Check again.');
+</script>
 @endif

@@ -86,8 +86,8 @@ class SettingsController extends Controller
             'max_courses_per_teacher_per_week' => (int)$request->max_courses_per_teacher_per_week,
             'percentage_by_subject' => (int)$request->percentage_by_subject,
         ]);
-        
-        return redirect()->route('settings.index')->with('info', 'Settings updated successfully.');
+
+        return redirect()->route('settings.index')->withInfo('Settings updated successfully.');
     }
 
     /**
