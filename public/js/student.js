@@ -3,9 +3,8 @@
     })
 
     function showStudent(studentId) {
-        console.log('object')
         $.ajax({
-            url: `/students/${studentId}`,
+            url: `/students/${studentId}/info`,
             type: "GET",
             data: {},
             beforeSend: function(data) {},

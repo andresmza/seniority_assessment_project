@@ -70,13 +70,25 @@ class StudentController extends Controller
      */
     public function show(User $student)
     {
-        // dd($student);
-        // $student = Student::where('id', $student)->first();
-        if ($student) {
-            return response()->json($student, 200);
-        } else {
-            return response()->json(['message' => 'No student found.'], 400);
+
+        $courses = User::studentsDetails($student->id);
+
+        foreach ($courses as $key => $course) {
+            if($course->payments != null){
+                $course->payments = explode(',', $course->payments);
+                $course->amounts = explode(',', $course->amounts);
+                $course->count_payments = count($course->payments);
+            }else{
+                $course->count_payments = 0;
+            }
         }
+        
+        // dd($courses);
+        // dd($student);
+        return view('students/show', [
+            'student' => $student,
+            'courses' => $courses,
+        ]);
     }
 
     /**
@@ -133,4 +145,16 @@ class StudentController extends Controller
             return response()->json(['message' => 'No student found.'], 400);
         }
     }
+
+    public function info(User $student)
+    {
+        // dd($student);
+        // $student = Student::where('id', $student)->first();
+        if ($student) {
+            return response()->json($student, 200);
+        } else {
+            return response()->json(['message' => 'No student found.'], 400);
+        }
+    }
+
 }

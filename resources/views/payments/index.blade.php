@@ -26,7 +26,7 @@
                                 <th>Student</th>
                                 <th>Subject</th>
                                 <th>Amount</th>
-                                <th>Date</th>
+                                <th>Payment Date</th>
                                 {{-- <th class="w-20">Actions</th> --}}
                             </tr>
                         </thead>

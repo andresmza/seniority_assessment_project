@@ -10,6 +10,9 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+    public $timestamps = false;
+
     public function course_user()
     {
         return $this->belongsTo(CourseUser::class, 'course_user_id');

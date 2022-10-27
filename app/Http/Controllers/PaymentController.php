@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseUser;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -37,7 +39,27 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $course_user = CourseUser::find($request->id);
+
+        $payments_count = count(Payment::where('course_user_id', 1)->get());
+        $total_payments = $course_user->course->subject->duration;
+
+        if($payments_count == $total_payments){
+            return response()->json(['message' => 'Error trying to process payment.'], 400);
+        }
+
+        
+        $payment = Payment::create([
+            'course_user_id' => $course_user->id,
+            'amount' => $course_user->price,
+            'created_at' => Carbon::now()->addHours(-3),
+        ]);
+
+        if ($payment) {
+            return response()->json($payment, 200);
+        } else {
+            return response()->json(['message' => 'Error trying to process payment.'], 400);
+        }       
     }
 
     /**

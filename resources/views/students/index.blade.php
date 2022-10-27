@@ -40,10 +40,13 @@
                                     <td>{{ $student->dni }}</td>
                                     <td>{{ $student->email }}</td>
                                     <td>
-                                        <button class="btn btn-outline btn-info"
+                                        {{-- <button class="btn btn-outline btn-info"
                                             onclick="showStudent({{ $student->id }})">
+                                            <x-icon name="information-circle" />
+                                        </button> --}}
+                                        <a href="/students/{{ $student->id }}"><button class="btn btn-outline btn-info">
                                             <x-icon name="eye" />
-                                        </button>
+                                        </button></a>
                                         <a href="/students/{{ $student->id }}/edit"><button class="btn btn-outline btn-success">
                                             <x-icon name="pencil-square" />
                                         </button></a>

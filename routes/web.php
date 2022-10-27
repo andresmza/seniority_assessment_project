@@ -39,4 +39,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('/settings', SettingsController::class)->only('index', 'update')->names('settings');
     Route::resource('/payments', PaymentController::class)->names('payments');
 
+    Route::get('/students/{student}/info', [StudentController::class, 'info']);
+
 });

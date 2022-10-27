@@ -50,17 +50,16 @@ class AdminController extends Controller
         ]);
 
         $admin = User::create([
-            'name' => $request->name ,
-            'lastname' => $request->lastname ,
-            'dni' => $request->dni ,
-            'email' => $request->email ,
-            'password' => bcrypt($request->password) ,
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'dni' => $request->dni,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
 
         $admin->assignRole('Admin');
 
         return redirect()->route('admins.index')->withInfo('Admin created successfully.');
-
     }
 
     /**
@@ -86,7 +85,7 @@ class AdminController extends Controller
      */
     public function edit(User $admin)
     {
-        if($admin->hasRole('admin')) {
+        if ($admin->hasRole('admin')) {
             return view('admins.edit', compact('admin'));
         } else {
             return view('admins/index', [
@@ -127,10 +126,8 @@ class AdminController extends Controller
         $admin->delete();
 
         if ($admin) {
-        // return redirect()->route('admins.index')->withInfo('Admin deleted successfully.');
-        return response()->json($admin, 200);
-    } else {
-            // return redirect()->route('admins.index')->withError('An error occurred while deleting user.');
+            return response()->json($admin, 200);
+        } else {
             return response()->json(['message' => 'No admin found.'], 400);
         }
     }
