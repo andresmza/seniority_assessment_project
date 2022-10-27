@@ -15,41 +15,42 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-                    <label for="createSubject" class="btn modal-open">Create subject</label>
+                    <label for="createPayment" class="btn modal-open">Create payment</label>
                     
                 </div>
                 <div class="overflow-x-auto mx-6 mb-4">
-                    <table class="table w-full">
+                    <table class="table w-full"> 
                         <!-- head -->
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Duration</th>
-                                <th>Monthly price</th>
-                                <th class="w-20">Actions</th>
+                                <th>Student</th>
+                                <th>Subject</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                {{-- <th class="w-20">Actions</th> --}}
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($subjects as $subject)
+                            @foreach ($payments as $payment)
                                 <tr>
-
-                                    <td>{{ $subject->name }}</td>
-                                    <td>{{ $subject->duration }} months</td>
-                                    <td>{{ $subject->price }} u$s</td>
-                                    <td>
+                                    <td>{{ $payment->user->name }} {{ $payment->user->lastname }}</td>
+                                    <td>{{ $payment->course->subject->name }}</td>
+                                    <td>{{ $payment->amount }} u$s</td>
+                                    <td>{{ $payment->created_at }}</td>
+                                    {{-- <td>
                                         <button class="btn btn-outline btn-info"
-                                            onclick="showSubject({{ $subject->id }})">
+                                            onclick="showPayment({{ $payment->id }})">
                                             <x-icon name="eye" />
                                         </button>
-                                        <a href="/subjects/{{ $subject->id }}/edit"><button class="btn btn-outline btn-success">
+                                        <a href="/payments/{{ $payment->id }}/edit"><button class="btn btn-outline btn-success">
                                             <x-icon name="pencil-square" />
                                         </button></a>
                                         <button class="btn btn-outline btn-error"
-                                            onclick="showRemoveSubject({{ json_encode($subject, true) }})">
+                                            onclick="showRemovePayment({{ json_encode($payment, true) }})">
                                             <x-icon name="trash" />
                                         </button>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
 
@@ -63,37 +64,37 @@
 
 
 <!-- Put this part before </body> tag -->
-<input type="checkbox" id="showSubject" class="modal-toggle" />
+<input type="checkbox" id="showPayment" class="modal-toggle" />
 <div class="modal">
     <div class="modal-box">
-        <h3 class="font-bold text-lg" id="showTitle"></h3>
-        <p class="py-4" id="showDescription"></p>
-        <p class="py-4" id="showDuration"></p>
-        <p class="py-4" id="showPrice"></p>
+        <h3 class="font-bold text-lg" id="showFullName"></h3>
+        <p class="py-4" id="showDNI"></p>
+        <p class="py-4" id="showEmail"></p>
         <div class="modal-action">
-            <label id="closeShowSubject" class="btn">Close</label>
+            <label id="closeShowPayment" class="btn">Close</label>
         </div>
     </div>
 </div>
 
 <!-- Put this part before </body> tag -->
-<input type="checkbox" id="showRemoveSubject" class="modal-toggle" />
+<input type="checkbox" id="showRemovePayment" class="modal-toggle" />
 <div class="modal">
     <div class="modal-box">
         <h3 class="font-bold text-lg" id="removeTitle"></h3>
         <p class="py-4" id="removeDescription"></p>
         <div class="modal-action">
-            <label id="closeRemoveSubject" class="btn">Close</label>
+            <label id="closeRemovePayment" class="btn">Close</label>
             <button class="btn btn-error" id="removeButton">Remove </button>
         </div>
     </div>
 </div>
 
-@include('subjects/modal-create')
-@include('subjects/modal-edit')
+{{-- @include('payments/modal-create') --}}
+
+{{-- @include('payments/modal-edit') --}}
 
 <script>
     const _token = "{{ csrf_token() }}";
 </script>
 
-<script src="{{ asset('js/subject.js') }}"></script>
+<script src="{{ asset('js/payment.js') }}"></script>

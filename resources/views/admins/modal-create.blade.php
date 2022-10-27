@@ -75,7 +75,7 @@
             </div>
 
             <div class="modal-action">
-                <label for="createStudent" class="btn btn-error">Cancel </label>
+                <label for="createAdmin" class="btn btn-error">Cancel </label>
                 <button type="submit" class="btn bg-slate-900">Save </button>
             </div>
         </form>

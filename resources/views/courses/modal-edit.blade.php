@@ -1,18 +1,19 @@
-<!-- Put this part before </body> tag -->
-<input type="checkbox" id="createSubject" class="modal-toggle" @if ($errors->any()) checked @endif />
+{{-- <!-- Put this part before </body> tag -->
+<input type="checkbox" id="editSubject" class="modal-toggle" @if ($errors->any()) checked @endif />
 <div class="modal">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">Create subject</h3>
+        <h3 class="font-bold text-lg">Edit subject</h3>
 
 
 
-        <form action="{{ route('subjects.store') }}" method="post">
+        <form action="{{ route('subjects.update', 0) }}" method="post" id="editSubjectForm">
+            @method('PUT')
             @csrf
             <div class="form-control">
                 <label class="label">
                     <span class="label-text"><b>Name</b></span>
                 </label>
-                <input type="text" placeholder="Name" name="name" value="{{ old('name') }}"
+                <input type="text" placeholder="Name" name="name" id="editName"
                     class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
             </div>
             @error('name')
@@ -22,9 +23,8 @@
             <div class="form-control">
                 <label class="label">
                     <span class="label-text"><b>Description</b></span>
-                    {{-- <span class="label-text-alt">Alt label</span> --}}
                 </label>
-                <textarea class="textarea textarea-bordered h-24" name="description" placeholder="Description">{{ old('description') }}</textarea>
+                <textarea class="textarea textarea-bordered h-24" name="description" placeholder="Description" id="editDescription"></textarea>
             </div>
             @error('description')
                 <div class="text-danger">{{ $message }}</div>
@@ -32,9 +32,9 @@
 
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text"><b>Monthly price</b></span>
+                    <span class="label-text"><b>Price</b></span>
                 </label>
-                <input type="number" placeholder="Monthly price" name="price" value="{{ old('price') }}" step="0.01"
+                <input type="number" placeholder="Price" name="price" id="editPrice" step="0.01"
                     class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
             </div>
             @error('price')
@@ -45,7 +45,7 @@
                 <label class="label">
                     <span class="label-text"><b>Duration</b></span>
                 </label>
-                <input type="number" placeholder="Duration (months)" name="duration" value="{{ old('duration') }}"
+                <input type="number" placeholder="Duration (months)" name="duration" id="editDuration"
                     class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" />
                 @error('duration')
                     <div class="text-danger">{{ $message }}</div>
@@ -53,9 +53,9 @@
             </div>
 
             <div class="modal-action">
-                <label for="createSubject" class="btn btn-error">Cancel </label>
+                <button class="btn btn-error" id="closeEditSubject">Cancel </button>
                 <button type="submit" class="btn bg-slate-900">Save </button>
             </div>
         </form>
     </div>
-</div>
+</div> --}}

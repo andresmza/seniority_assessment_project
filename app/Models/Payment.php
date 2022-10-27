@@ -9,12 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    
-    // public function payments(){
-    //     return $this->hasManyThrough(Course::class, User::class, )
-    // }
 
-    public function course_user(){
+    public function course_user()
+    {
         return $this->belongsTo(CourseUser::class, 'course_user_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOneThrough(User::class, CourseUser::class, 'id', 'id', 'course_user_id', 'user_id');
+    }
+
+    public function course()
+    {
+        return $this->hasOneThrough(Course::class, CourseUser::class, 'id', 'id', 'course_user_id', 'course_id');
     }
 }

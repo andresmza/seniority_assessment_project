@@ -31,18 +31,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         return view('dashboard');
     })->name('dashboard');
 
-    // Route::get('/subjects', function () {
-    //     return view('subjects/index');
-    // })->name('subjects');
-
-    Route::get('/teachers', function () {
-        return view('teachers.index');
-    })->name('teachers');
-
-    Route::get('/students', function () {
-        return view('students');
-    })->name('students');
-
     Route::resource('/courses', CourseController::class)->names('courses');
     Route::resource('/subjects', SubjectController::class)->names('subjects');
     Route::resource('/admins', AdminController::class)->names('admins');

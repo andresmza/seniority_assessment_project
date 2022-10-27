@@ -31,7 +31,7 @@
 
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Price</span>
+                            <span class="label-text">Monthly price</span>
                         </label>
                         <input type="number" placeholder="Price" name="price" class="input input-bordered w-full"
                             style="border-radius: 8px; border-color: #bdbdbd;" />

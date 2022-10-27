@@ -152,7 +152,7 @@
                             </x-jet-dropdown-link>
 
                             <x-jet-dropdown-link href="{{ route('settings.index') }}">
-                                {{ __(' Global Settings') }}
+                                {{ __(' Settings') }}
                             </x-jet-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -250,7 +250,7 @@
                 </x-jet-responsive-nav-link>
 
                 <x-jet-responsive-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs('settings.index')">
-                    {{ __('Global Settings') }}
+                    {{ __('Settings') }}
                 </x-jet-responsive-nav-link>
 
 

@@ -10,15 +10,18 @@ class CourseUser extends Model
 {
     use HasFactory;
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', null, 'course_user');
     }
 
-    public function course(){
+    public function course()
+    {
         return $this->belongsTo(Course::class, 'course_id');
     }
 
-    public function payments(){
+    public function payments()
+    {
         return $this->hasMany(Payment::class, 'course_user_id');
     }
 }

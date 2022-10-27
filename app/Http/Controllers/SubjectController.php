@@ -45,13 +45,6 @@ class SubjectController extends Controller
             'duration' => 'required|regex:/^[1-9](\d*)$/',
         ]);
 
-        $validated = $request->validate([
-            'name' => 'required|max:255|unique:subjects,name,'. $subject->id,
-            'description' => 'required|max:255',
-            'price' => 'required|regex:/^\d*(\.\d{2})?$/',
-            'duration' => 'required|regex:/^[1-9](\d*)$/',
-        ]);
-
         Subject::create($request->except('_token'));
 
         return view('subjects/index', [

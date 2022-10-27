@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('course_user_id');
             $table->float('amount');
+            $table->timestamp('created_at');
             
             $table->foreign('course_user_id')->references('id')->on('course_users');
 
-            $table->timestamps();
         });
     }
 
