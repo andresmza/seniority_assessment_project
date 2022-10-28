@@ -18,6 +18,8 @@
                     <label for="createCourse" class="btn modal-open">Create course</label>
                     
                 </div>
+
+
                 <div class="overflow-x-auto mx-6 mb-4">
                     <table class="table w-full"> 
                         <!-- head -->
@@ -97,6 +99,28 @@
 @include('courses/modal-create')
 
 {{-- @include('courses/modal-edit') --}}
+
+
+
+@if (session('info'))
+    <script>
+        toastr['success']('{{session('info')}}');
+    </script>
+@endif
+{{-- 
+@if ($errors->any())
+<script>
+    toastr['error']('An error occurred while saving the data. Check again.');
+</script>
+@endif --}}
+
+
+@if ($message = Session::get('error'))
+<script>
+    toastr['error']('{{ $message }}');
+</script>
+@endif
+
 
 <script>
     const _token = "{{ csrf_token() }}";

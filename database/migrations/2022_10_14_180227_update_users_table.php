@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('lastname')->after('name');
             $table->integer('dni')->after('lastname');
             $table->boolean('status')->after('password')->default(1);
+            // $table->softDeletes();
         });
     }
 

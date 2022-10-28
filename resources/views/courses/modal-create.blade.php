@@ -37,23 +37,8 @@
                 <label class="label">
                     <span class="label-text"><b>Start date</b></span>
                 </label>
-                <input type="date" name="start_date" id="start_date" min="2022-10-26" class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" required/>
+                <input type="date" name="start_date" id="start_date" min="{{now()->format('Y-m-d')}}" value="{{now()->format('Y-m-d')}}" class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" required/>
             </div>
-
-            {{-- <div class="form-control">
-                <label class="label">
-                    <span class="label-text"><b>End date</b></span>
-                </label>
-                <input type="date" name="end_date" id="end_date" value="" class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" disabled/>
-            </div>
-
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text"><b>Duration</b></span>
-                </label>
-                <input type="number" placeholder="Duration" name="duration" value=""
-                    class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" disabled/>
-            </div> --}}
 
             <div class="modal-action">
                 <label for="createCourse" class="btn btn-error">Cancel </label>

@@ -14,11 +14,8 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-                    <label for="createPayment" class="btn modal-open">Create payment</label>
-                    
-                </div>
-                <div class="overflow-x-auto mx-6 mb-4">
+                
+                <div class="overflow-x-auto my-6 mx-6 mb-4">
                     <table class="table w-full"> 
                         <!-- head -->
                         <thead>
@@ -33,24 +30,16 @@
                         <tbody>
 
                             @foreach ($payments as $payment)
+                            {{-- {{dd($payment->course)}} --}}
                                 <tr>
                                     <td>{{ $payment->user->name }} {{ $payment->user->lastname }}</td>
+                                    @if ($payment->course->deleted_at == null)
+                                    <td><a href="/courses/{{$payment->course->id}}" style="color: #4a4ae2;">{{ $payment->course->subject->name }}</a></td>
+                                    @else
                                     <td>{{ $payment->course->subject->name }}</td>
+                                    @endif
                                     <td>{{ $payment->amount }} u$s</td>
                                     <td>{{ $payment->created_at }}</td>
-                                    {{-- <td>
-                                        <button class="btn btn-outline btn-info"
-                                            onclick="showPayment({{ $payment->id }})">
-                                            <x-icon name="eye" />
-                                        </button>
-                                        <a href="/payments/{{ $payment->id }}/edit"><button class="btn btn-outline btn-success">
-                                            <x-icon name="pencil-square" />
-                                        </button></a>
-                                        <button class="btn btn-outline btn-error"
-                                            onclick="showRemovePayment({{ json_encode($payment, true) }})">
-                                            <x-icon name="trash" />
-                                        </button>
-                                    </td> --}}
                                 </tr>
                             @endforeach
 

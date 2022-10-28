@@ -5,10 +5,15 @@ namespace App\Models;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CourseUser extends Model
 {
     use HasFactory;
+
+    // use SoftDeletes;
+
+    protected $guarded = [];
 
     public function user()
     {

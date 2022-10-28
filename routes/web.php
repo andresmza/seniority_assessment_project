@@ -40,5 +40,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('/payments', PaymentController::class)->names('payments');
 
     Route::get('/students/{student}/info', [StudentController::class, 'info']);
+    Route::post('/courses/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
+    Route::delete('/courses/unsuscribe/{id}', [CourseController::class, 'unsuscribe'])->name('courses.unsuscribe');
 
 });

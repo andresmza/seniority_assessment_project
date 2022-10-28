@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -14,9 +17,18 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('students/index', [
-            'students' => User::role('student')->get(),
-        ]);
+        if(Auth::user()->hasRole('teacher')){
+            return view('students/my-students', [
+                'students' => User::role('student')->get(),
+            ]);
+        }
+
+        if(Auth::user()->hasRole('admin')){
+            return view('students/index', [
+                'students' => User::role('student')->get(),
+            ]);
+        }
+        
     }
 
     /**
@@ -70,6 +82,7 @@ class StudentController extends Controller
      */
     public function show(User $student)
     {
+        $available_courses = null;
 
         $courses = User::studentsDetails($student->id);
 
@@ -82,12 +95,15 @@ class StudentController extends Controller
                 $course->count_payments = 0;
             }
         }
-        
-        // dd($courses);
-        // dd($student);
+
+        if(count($courses) < Settings::find(1)->max_courses_per_student){
+            $available_courses = Course::availableCourses($student->id);
+        }
+
         return view('students/show', [
             'student' => $student,
             'courses' => $courses,
+            'available_courses' => $available_courses,
         ]);
     }
 

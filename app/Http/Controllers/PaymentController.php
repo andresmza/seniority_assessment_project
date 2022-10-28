@@ -41,18 +41,17 @@ class PaymentController extends Controller
     {
         $course_user = CourseUser::find($request->id);
 
-        $payments_count = count(Payment::where('course_user_id', 1)->get());
+        $payments_count = count(Payment::where('course_user_id', $course_user->id)->get());
         $total_payments = $course_user->course->subject->duration;
 
         if($payments_count == $total_payments){
             return response()->json(['message' => 'Error trying to process payment.'], 400);
         }
 
-        
         $payment = Payment::create([
             'course_user_id' => $course_user->id,
             'amount' => $course_user->price,
-            'created_at' => Carbon::now()->addHours(-3),
+            'created_at' => Carbon::now(),
         ]);
 
         if ($payment) {

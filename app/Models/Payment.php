@@ -25,6 +25,6 @@ class Payment extends Model
 
     public function course()
     {
-        return $this->hasOneThrough(Course::class, CourseUser::class, 'id', 'id', 'course_user_id', 'course_id');
+        return $this->hasOneThrough(Course::class, CourseUser::class, 'id', 'id', 'course_user_id', 'course_id')->withTrashed();
     }
 }

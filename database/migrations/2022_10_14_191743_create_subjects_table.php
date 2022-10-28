@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('duration');
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
