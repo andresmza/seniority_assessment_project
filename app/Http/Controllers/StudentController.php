@@ -7,6 +7,7 @@ use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class StudentController extends Controller
 {
@@ -17,14 +18,24 @@ class StudentController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->hasRole('teacher')){
-            return view('students/my-students', [
+        if(Auth::user()->hasRole('admin')){
+            return view('students/index', [
                 'students' => User::role('student')->get(),
             ]);
         }
+        
+        if(Auth::user()->hasRole('teacher')){
+            $teacher_id = Auth::user()->id;
+            $myStudents = User::getMyStudents();
+            // dd(User::role('teacher')->join('courses', 'courses.teacher_id', '=', 'users.id')->get());
 
-        if(Auth::user()->hasRole('admin')){
-            return view('students/index', [
+            return view('students/my-students', [
+                'students' => $myStudents,
+            ]);
+        }
+
+        if(Auth::user()->hasRole('student')){
+            return view('students/show', [
                 'students' => User::role('student')->get(),
             ]);
         }
@@ -85,12 +96,14 @@ class StudentController extends Controller
         $available_courses = null;
 
         $courses = User::studentsDetails($student->id);
-
+// dd($courses);
         foreach ($courses as $key => $course) {
             if($course->payments != null){
                 $course->payments = explode(',', $course->payments);
                 $course->amounts = explode(',', $course->amounts);
-                $course->count_payments = count($course->payments);
+                $course->expiration_date = explode(',', $course->expiration_date);
+                $course->payment_date = explode(',', $course->payment_date);
+                $course->count_payments = count($course->payment_date);
             }else{
                 $course->count_payments = 0;
             }
@@ -164,8 +177,6 @@ class StudentController extends Controller
 
     public function info(User $student)
     {
-        // dd($student);
-        // $student = Student::where('id', $student)->first();
         if ($student) {
             return response()->json($student, 200);
         } else {

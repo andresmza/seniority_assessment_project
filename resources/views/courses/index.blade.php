@@ -48,15 +48,10 @@
                                         <a href="/courses/{{ $course->id }}"><button class="btn btn-outline btn-info">
                                             <x-icon name="eye" />
                                         </button></a>
-                                        {{-- <a href="/courses/{{ $course->id }}/edit"><button class="btn btn-outline btn-success">
-                                            <x-icon name="pencil-square" />
-                                        </button></a> --}}
-                                        @if ($course->students->count() == 0)
                                         <button class="btn btn-outline btn-error"
                                         onclick="showRemoveCourse({{ json_encode($course, true) }})">
                                         <x-icon name="trash" />
                                     </button>
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -98,7 +93,6 @@
 
 @include('courses/modal-create')
 
-{{-- @include('courses/modal-edit') --}}
 
 
 
@@ -107,13 +101,6 @@
         toastr['success']('{{session('info')}}');
     </script>
 @endif
-{{-- 
-@if ($errors->any())
-<script>
-    toastr['error']('An error occurred while saving the data. Check again.');
-</script>
-@endif --}}
-
 
 @if ($message = Session::get('error'))
 <script>

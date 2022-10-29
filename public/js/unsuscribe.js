@@ -22,6 +22,8 @@ function unsuscribe(id) {
         error: function(xhr, status, error) {
         },
         complete: function(data) {
+            location.reload();
+
         },
     })
 }

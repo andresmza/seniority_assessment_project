@@ -3,7 +3,8 @@
 <div class="modal">
     <div class="modal-box w-11/12 max-w-2xl">
         <h3 class="font-bold text-lg">Select course</h3>
-
+        <p class="text-sm text-gray-400 mt-1 mb-4">Only courses that haven't started more than a week ago are displayed.
+        </p>
 
 
         <form action="{{ route('courses.enroll') }}" method="post">
@@ -15,7 +16,7 @@
                     <tr>
                         <th></th>
                         <th>Subject</th>
-                        <th>Teachjer</th>
+                        <th>Teacher</th>
                         <th>Start date</th>
                         <th>End Date</th>
                         <th>Price</th>

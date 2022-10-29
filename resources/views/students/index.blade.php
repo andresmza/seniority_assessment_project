@@ -16,10 +16,10 @@
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
                     <label for="createStudent" class="btn modal-open">Create student</label>
-                    
+
                 </div>
                 <div class="overflow-x-auto mx-6 mb-4">
-                    <table class="table w-full"> 
+                    <table class="table w-full">
                         <!-- head -->
                         <thead>
                             <tr>
@@ -40,16 +40,13 @@
                                     <td>{{ $student->dni }}</td>
                                     <td>{{ $student->email }}</td>
                                     <td>
-                                        {{-- <button class="btn btn-outline btn-info"
-                                            onclick="showStudent({{ $student->id }})">
-                                            <x-icon name="information-circle" />
-                                        </button> --}}
                                         <a href="/students/{{ $student->id }}"><button class="btn btn-outline btn-info">
-                                            <x-icon name="eye" />
-                                        </button></a>
-                                        <a href="/students/{{ $student->id }}/edit"><button class="btn btn-outline btn-success">
-                                            <x-icon name="pencil-square" />
-                                        </button></a>
+                                                <x-icon name="eye" />
+                                            </button></a>
+                                        <a href="/students/{{ $student->id }}/edit"><button
+                                                class="btn btn-outline btn-success">
+                                                <x-icon name="pencil-square" />
+                                            </button></a>
                                         <button class="btn btn-outline btn-error"
                                             onclick="showRemoveStudent({{ json_encode($student, true) }})">
                                             <x-icon name="trash" />
@@ -94,7 +91,6 @@
 </div>
 
 @include('students/modal-create')
-{{-- @include('students/modal-edit') --}}
 
 <script>
     const _token = "{{ csrf_token() }}";

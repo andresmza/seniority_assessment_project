@@ -16,7 +16,7 @@
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
                     <label for="createTeacher" class="btn modal-open">Create teacher</label>
-                    
+
                 </div>
                 <div class="overflow-x-auto mx-6 mb-4">
                     <table class="table w-full">
@@ -44,9 +44,10 @@
                                             onclick="showTeacher({{ $teacher->id }})">
                                             <x-icon name="eye" />
                                         </button>
-                                        <a href="/teachers/{{ $teacher->id }}/edit"><button class="btn btn-outline btn-success">
-                                            <x-icon name="pencil-square" />
-                                        </button></a>
+                                        <a href="/teachers/{{ $teacher->id }}/edit"><button
+                                                class="btn btn-outline btn-success">
+                                                <x-icon name="pencil-square" />
+                                            </button></a>
                                         <button class="btn btn-outline btn-error"
                                             onclick="showRemoveTeacher({{ json_encode($teacher, true) }})">
                                             <x-icon name="trash" />
@@ -91,7 +92,6 @@
 </div>
 
 @include('teachers/modal-create')
-{{-- @include('teachers/modal-edit') --}}
 
 <script>
     const _token = "{{ csrf_token() }}";

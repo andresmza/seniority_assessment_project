@@ -37,7 +37,7 @@
                 <label class="label">
                     <span class="label-text"><b>Start date</b></span>
                 </label>
-                <input type="date" name="start_date" id="start_date" min="{{now()->format('Y-m-d')}}" value="{{now()->format('Y-m-d')}}" class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" required/>
+                <input type="date" name="start_date" id="start_date" min="{{$course_start_date}}" value="{{ $course_start_date }}" class="input input-bordered w-full" style="border-radius: 8px; border-color: #bdbdbd;" required/>
             </div>
 
             <div class="modal-action">

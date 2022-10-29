@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class SubjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')->only('delete');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +20,16 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        return view('subjects/index', [
-            'subjects' => Subject::all(),
-        ]);
+        if (Auth::user()->hasRole('admin')) {
+            return view('subjects/index', [
+                'subjects' => Subject::all(),
+            ]);
+        }
+        if (Auth::user()->hasRole('teacher')) {
+            return view('subjects/my-subjects', [
+                'subjects' => Subject::mysubjects(),
+            ]);
+        }
     }
 
     /**
@@ -50,7 +63,6 @@ class SubjectController extends Controller
         return view('subjects/index', [
             'subjects' => Subject::all(),
         ]);
-
     }
 
     /**
@@ -61,14 +73,11 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        // dd($subject);
-        // $subject = Subject::where('id', $subject)->first();
-        if($subject){
-            return response()->json($subject,200);
-        }else{
-            return response()->json(['message' => 'No subject found.'],400);
+        if ($subject) {
+            return response()->json($subject, 200);
+        } else {
+            return response()->json(['message' => 'No subject found.'], 400);
         }
-        
     }
 
     /**
@@ -92,7 +101,7 @@ class SubjectController extends Controller
     public function update(Request $request, Subject $subject)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255|unique:subjects,name,'. $subject->id,
+            'name' => 'required|max:255|unique:subjects,name,' . $subject->id,
             'description' => 'required|max:255',
             'price' => 'required|regex:/^\d*(\.\d{2})?$/',
             'duration' => 'required|regex:/^[1-9](\d*)$/',
@@ -113,11 +122,10 @@ class SubjectController extends Controller
     {
         $subject->delete();
 
-        if($subject){
-            return response()->json($subject,200);
-        }else{
-            return response()->json(['message' => 'No subject found.'],400);
+        if ($subject) {
+            return response()->json($subject, 200);
+        } else {
+            return response()->json(['message' => 'No subject found.'], 400);
         }
     }
-    
 }

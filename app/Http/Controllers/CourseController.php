@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\CourseUser;
+use App\Models\Payment;
 use App\Models\Settings;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Carbon\CarbonPeriod;
+use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
 // use Cmixin\EnhancedPeriod;
 
 class CourseController extends Controller
@@ -21,11 +26,43 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('courses/index', [
-            'courses' => Course::all(),
-            'subjects' => Subject::all(),
-            'teachers' => User::role('teacher')->get(),
-        ]);
+        if (Auth::user()->hasRole('admin')) {
+            return view('courses/index', [
+                'courses' => Course::all(),
+                'subjects' => Subject::all(),
+                'teachers' => User::role('teacher')->get(),
+                'course_start_date' => Carbon::now()->startOfMonth()->addMonth()->format('Y-m-d'),
+            ]);
+        }
+        if (Auth::user()->hasRole('teacher')) {
+            $teacher_id = Auth::user()->id;
+
+            return view('courses/my-courses', [
+                'courses' => Course::where('teacher_id', $teacher_id)->get(),
+                'subjects' => Subject::all(),
+                'teachers' => array(User::find($teacher_id)),
+                'course_start_date' => Carbon::now()->startOfMonth()->addMonth()->format('Y-m-d'),
+            ]);
+        }
+        if (Auth::user()->hasRole('student')) {
+            $student_id = Auth::user()->id;
+
+            $courses = Course::getEnrolledCourses($student_id);
+            foreach ($courses as $key => $course) {
+                $course->amounts = explode(',', $course->amounts);
+                $course->expiration_dates = explode(',', $course->expiration_dates);
+                $course->payment_dates = explode(',', $course->payment_dates);
+            }
+            $available_courses = Course::availableCourses($student_id);
+            $pending_payments = Payment::getMyPendingPayments($student_id)[0]->pending;
+// dd($courses);
+            return view('courses/my-enrolled-courses', [
+                'student' => Auth::user(),
+                'courses' => $courses,
+                'available_courses' => $available_courses,
+                'pending_payments' => $pending_payments,
+            ]);
+        }
     }
 
     /**
@@ -79,17 +116,24 @@ class CourseController extends Controller
                 $course_start_week = Carbon::parse($course->start_date)->startOfWeek();
                 $course_end_week = Carbon::parse($course->end_date)->endOfWeek();
 
-                if (CarbonPeriod::create(Carbon::parse($weeks[$n - 1])->format('Y-m-d'), Carbon::parse($weeks[$n])->format('Y-m-d'))->overlapsWith($course_start_week, $course_end_week)) {
+                $start_week_compare = Carbon::parse($weeks[$n - 1])->format('Y-m-d H:i:s');
+                $end_week_compare = Carbon::parse($weeks[$n])->addSeconds(-1)->format('Y-m-d H:i:s');
+
+                // echo $course->id . '   ' . $course_start_week .' - '. $course_end_week .' | '. $start_week_compare .' | '. $end_week_compare . ' ' . CarbonPeriod::create($start_week_compare, $end_week_compare)->overlapsWith($course_start_week, $course_end_week) .'<br>';
+
+                if (CarbonPeriod::create($start_week_compare, $end_week_compare)->overlapsWith($course_start_week, $course_end_week)) {
                     $coincidences++;
                 }
             }
+
+            // echo '<br>';
 
             if ($coincidences >= $max_coincidences) {
                 $available_date = false;
             }
         } while ($weeks[$n] < $end_week);
 
-        // dd($available_date, Carbon::parse($weeks[$n - 1])->format('Y-m-d'), Carbon::parse($weeks[$n])->format('Y-m-d'), $course_start_week, $course_end_week);
+        // dd($available_date, Carbon::parse($weeks[$n - 1])->format('Y-m-d'), Carbon::parse($weeks[$n])->format('Y-m-d'), $course_start_week, $course_end_week, $request->all());
 
 
         if ($available_date) {
@@ -114,19 +158,29 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $students = $course->students()->get();
 
-        foreach ($students as $student) {
-            $student->payments = Course::getStudentsInfo($course->id, $student->id);
-        }
-
+        $payments = Payment::getPaymentsByCourse($course->id);
+        $students = User::getStudentsByCourse($course->id);
         // dd($students);
-        return view('courses/show', [
-            'course' => $course,
-            'students' => $students,
-            // 'subjects' => Subject::all(),
-            // 'teachers' => User::role('teacher')->get(),
-        ]);
+        if (Auth::user()->hasRole('admin')) {
+            return view('courses/show', [
+                'course' => $course,
+                'students' => $students,
+                'payments' => $payments,
+            ]);
+        }
+        if (Auth::user()->hasRole('teacher')) {
+
+            $students = User::getStudentsByCourse($course->id);
+            $payments = Payment::getPaymentsByCourse($course->id);
+
+            return view('courses/show', [
+                'course' => $course,
+                'students' => $students,
+                'payments' => $payments,
+                // 'teachers' => User::role('teacher')->get(),
+            ]);
+        }
 
         // dd($course);
     }
@@ -170,25 +224,57 @@ class CourseController extends Controller
     {
         $course = Course::find($request->course_id);
 
-        if (count(User::studentsDetails($request->student_id)) >= Settings::find(1)->max_courses_per_student) {
+        $max_courses_per_student = Settings::find(1)->max_courses_per_student;
+
+        if (count(User::studentsDetails($request->student_id)) >= $max_courses_per_student) {
             return redirect()->route('students.show', $request->student_id)->withErrors(['You have reached the maximum course limit']);
         }
 
-        CourseUser::create([
+        $course_user = CourseUser::create([
             'course_id' => $request->course_id,
             'user_id' => $request->student_id,
             'price' => $course->subject->price,
         ]);
+        $expiration_date = Carbon::parse($course->start_date)->startOfMonth()->addDays(9);
 
-        return redirect()->route('students.show', $request->student_id)->withInfo('Course enrolled successfully.');
+        for ($i = 0; $i < $course->subject->duration; $i++) {
+
+            Payment::create([
+                'course_user_id' => $course_user->id,
+                'amount' => $course_user->price,
+                'expiration_date' => $expiration_date,
+            ]);
+
+            $expiration_date->addMonth();
+        }
+
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('students.show', $request->student_id)->withInfo('Course enrolled successfully.');
+        }
+
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('courses.index', $request->student_id)->withInfo('Course enrolled successfully.');
+        }
     }
 
     public function unsuscribe($id)
     {
+        $course_user = CourseUser::where('id', $id)->withTrashed();
 
-        $course_user = CourseUser::find($id);
-        $course_user->delete();
+        $payments = Payment::where('course_user_id', $id)->where('payment_date', null)->delete();
 
-        return redirect()->route('courses.index')->withInfo('Course unsuscribe successfully.');
+        $course_user = $course_user->delete();
+
+        return response()->json($course_user, 200);
+        // return redirect()->route('courses.index')->withInfo('Course unsuscribe successfully.');
+    }
+
+    public function setCalification(Request $request)
+    {
+        $course_user = CourseUser::where('id', $request->course_user_id)->first();
+        $course_user->final_calification = intval($request->final_calification);
+        $course_user->save();
+
+        return redirect()->route('courses.show', $request->course_id)->withInfo('Final calification updated successfully.');
     }
 }

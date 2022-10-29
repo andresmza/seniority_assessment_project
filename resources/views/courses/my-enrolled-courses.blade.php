@@ -7,12 +7,14 @@
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
                     <h3 class="font-bold text-center text-lg">{{ $student->name }} {{ $student->lastname }}</h3>
                 </div>
-                <div class="overflow-x-auto mx-6 mb-4 ml-12">
 
+                <div class="overflow-x-auto mx-6 mb-4 ml-12">
+                    <h3 class="font-bold text-lg">Pending payment current month: {{ $pending_payments ?? 0 }} u$s</h3>
                 </div>
-                @if ($available_courses && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('student')))
+                @if ($available_courses)
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
                         <label for="enrollCourse" class="btn modal-open">Enroll in a course</label>
+
                     </div>
                 @endif
 
@@ -23,19 +25,11 @@
                             style="display: flex; border: groove; border-radius: 10px;">
                             <div style="width: 50%">
                                 <p class="font-bold mt-4"><u>{{ $course->name }}</u></p>
-                                <p class="mt-2">Teacher: {{ $course->teacher }} </p>
+                                <p class="mt-2">Teacher: {{ $course->teacher }}</p>
                                 <p class="mt-2">Monthly price: {{ $course->price }} u$s</p>
                                 <p class="mt-2">Start date: {{ $course->start_date }}</p>
                                 <p class="">End date: {{ $course->end_date }}</p>
                                 <p class="mt-2">Final calification: {{ $course->final_calification ?? 'N/A' }}</p>
-
-                                @if (Auth::user()->hasRole('admin'))
-                                    <button class="btn btn-info mt-4"
-                                        onclick="showCreatePayment({{ $course->course_user_id }}, {{ json_encode($course, true) }})"
-                                        @if ($course->count_payments == $course->total_payments)  @endif>Register payment</button>
-                                    <button class="btn btn-error mt-4"
-                                        onclick="showUnsuscribe({{ $course->course_user_id }}, {{ json_encode($course, true) }})">Unsuscribe</button>
-                                @endif
 
                             </div>
                             <div style="width: 50%">
@@ -50,18 +44,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($course->payments != null)
-                                            @foreach ($course->payments as $key => $payment)
+
+                                        @if ($course->amounts != null)
+                                            @foreach ($course->amounts as $key => $payment)
                                                 @if ($payment)
                                                     <tr>
                                                         <td style="width: 25ch">
                                                             {{ $course->amounts[$key] }} u$s
                                                         </td>
-                                                        <td style="width: 25ch">
-                                                            {{ $course->expiration_date[$key] }}
+                                                        <td style="width: 25ch;">
+                                                            {{ $course->expiration_dates[$key] }}
                                                         </td>
                                                         <td style="width: 25ch">
-                                                            {{ $course->payment_date[$key] ?? '' }}
+                                                            {{ $course->payment_dates[$key] == 0 ? 'Not paid' : $course->payment_dates[$key] }}
                                                         </td>
                                                     </tr>
                                                 @else
@@ -84,6 +79,7 @@
                                 </table>
                             </div>
 
+
                         </div>
                     @endforeach
                 </div>
@@ -93,9 +89,7 @@
     </div>
 </x-app-layout>
 
-@include('students/modal-payment')
 @include('students/modal-enroll-course')
-@include('students/modal-unsuscribe')
 
 <script>
     const _token = "{{ csrf_token() }}";

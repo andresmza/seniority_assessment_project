@@ -5,55 +5,77 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="/courses">
                         {{-- <x-jet-application-mark class="block h-9 w-auto" /> --}}
                         <img src="/courses-icon-27.jpg" alt="" width="50" height="50">
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses.index')">
-                        {{ __('Courses') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('subjects.index') }}" :active="request()->routeIs('subjects.index')">
-                        {{ __('Subjects') }}
-                    </x-jet-nav-link>
-                </div>
-                @if (Auth::user()->hasRole('admin') )
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('teachers.index') }}" :active="request()->routeIs('teachers.index')">
-                        {{ __('Teachers') }}
-                    </x-jet-nav-link>
-                </div>
-                @endif                
                 @if (Auth::user()->hasRole('admin'))
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses.index')">
+                            {{ __('Courses') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('subjects.index') }}" :active="request()->routeIs('subjects.index')">
+                            {{ __('Subjects') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('teachers.index') }}" :active="request()->routeIs('teachers.index')">
+                            {{ __('Teachers') }}
+                        </x-jet-nav-link>
+                    </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('students.index') }}" :active="request()->routeIs('students.index')">
                             {{ __('Students') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if (Auth::user()->hasRole('admin'))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('admins.index') }}" :active="request()->routeIs('admins.index')">
                             {{ __('Admins') }}
                         </x-jet-nav-link>
                     </div>
-                @endif
-                @if (Auth::user()->hasRole('admin'))
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('payments.index') }}" :active="request()->routeIs('payments.index')">
                             {{ __('Payments') }}
                         </x-jet-nav-link>
                     </div>
+                @endif
+
+                @if (Auth::user()->hasRole('teacher'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('subjects.index') }}" :active="request()->routeIs('subjects.index')">
+                            {{ __('Subjects') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses.index')">
+                            {{ __('Courses') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('students.index') }}" :active="request()->routeIs('students.index')">
+                            {{ __('Students') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('payments.index') }}" :active="request()->routeIs('payments.index')">
+                            {{ __('Payments') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+
+                @if (Auth::user()->hasRole('student'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('courses.index') }}" :active="request()->routeIs('courses.index')">
+                            {{ __('My courses') }}
+                        </x-jet-nav-link>
+                    </div>
+
                 @endif
 
             </div>
@@ -151,9 +173,11 @@
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
 
+                            @if (Auth::user()->hasRole('admin'))
                             <x-jet-dropdown-link href="{{ route('settings.index') }}">
                                 {{ __(' Settings') }}
                             </x-jet-dropdown-link>
+                            @endif
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
@@ -249,10 +273,11 @@
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
+                @if (Auth::user()->hasRole('admin'))
                 <x-jet-responsive-nav-link href="{{ route('settings.index') }}" :active="request()->routeIs('settings.index')">
                     {{ __('Settings') }}
                 </x-jet-responsive-nav-link>
-
+                @endif
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
