@@ -10,7 +10,7 @@
                 <div class="overflow-x-auto mx-6 mb-4 ml-12">
 
                 </div>
-                @if ($available_courses && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('student')))
+                @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('student'))
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
                         <label for="enrollCourse" class="btn modal-open">Enroll in a course</label>
                     </div>
@@ -103,8 +103,15 @@
 
 <script src="{{ asset('js/create-payment.js') }}"></script>
 <script src="{{ asset('js/unsuscribe.js') }}"></script>
-@if ($errors->any())
+
+@if (session('info'))
     <script>
-        toastr['error']('An error occurred while saving the data. Check again.');
+        toastr['success']('{{session('info')}}');
     </script>
+@endif
+
+@if ($message = Session::get('error'))
+<script>
+    toastr['error']('{{ $message }}');
+</script>
 @endif

@@ -222,12 +222,14 @@ class CourseController extends Controller
 
     public function enroll(Request $request)
     {
-        $course = Course::find($request->course_id);
 
+        $course = Course::find($request->course_id);
         $max_courses_per_student = Settings::find(1)->max_courses_per_student;
 
-        if (count(User::studentsDetails($request->student_id)) >= $max_courses_per_student) {
-            return redirect()->route('students.show', $request->student_id)->withErrors(['You have reached the maximum course limit']);
+        $overlapping_courses = Course::getOverlappingCourses($request->student_id, $course)[0]->count;
+
+        if ($overlapping_courses >= $max_courses_per_student) {
+            return redirect()->route('students.show', $request->student_id)->with('error','You have reached the maximum course limit for this period');
         }
 
         $course_user = CourseUser::create([

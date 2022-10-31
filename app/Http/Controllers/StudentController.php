@@ -109,9 +109,7 @@ class StudentController extends Controller
             }
         }
 
-        if(count($courses) < Settings::find(1)->max_courses_per_student){
             $available_courses = Course::availableCourses($student->id);
-        }
 
         return view('students/show', [
             'student' => $student,

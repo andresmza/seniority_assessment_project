@@ -71,6 +71,24 @@ class Course extends Model
 
         return DB::select($query);
     }
+    
+    public static function getOverlappingCourses($user_id, $course)
+    {
+        $query = "SELECT count(*) as count FROM courses c
+        LEFT JOIN course_users cu ON cu.course_id = c.id
+        LEFT JOIN users u ON u.id = cu.user_id
+        WHERE cu.user_id = $user_id
+        AND cu.deleted_at IS NULL
+        AND c.deleted_at IS NULL
+        AND (
+            ('$course->start_date' <= c.start_date AND '$course->end_date' >= c.end_date) 
+            OR ('$course->start_date' >= c.start_date AND '$course->start_date' <= c.end_date)
+            OR ('$course->end_date' >= c.start_date AND '$course->end_date' <= c.end_date)
+        )
+        ";
+
+        return DB::select($query);
+    }
 
     public function subject()
     {
