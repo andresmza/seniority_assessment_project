@@ -13,7 +13,7 @@
                     <p class="text-md">Students: {{ $course->students->count() }}</p>
                     <p class="text-md">Duration: {{ $course->subject->duration }} months</p>
                     <p class="text-md">Start date: {{ $course->start_date }}</p>
-                    <p class="text-md">End date: {{ $course->start_date }}</p>
+                    <p class="text-md">End date: {{ $course->end_date }}</p>
 
                 </div>
 

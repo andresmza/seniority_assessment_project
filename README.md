@@ -1,66 +1,99 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## SENIORITY ASSESSMENT PROJECT
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+YOU MUST DEVELOP A SYSTEM TO MANAGE A COURSE PLATFORM. YOU MUST MANAGE DATA OF STUDENTS, TEACHERS, SUBJECTS AND PAYMENTS.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ENTIDADES BASE
 
-## Learning Laravel
+- STUDENTS
+- TEACHERS
+- SUBJECTS
+- PAYMENTS
+- ADMIN
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Debes determinar los roles de acceso para cada entidad, diseñar la base de datos y las tablas de cada entidad con los campos que creas oportunos y necesarios.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Admins role
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Debería poder agregar estudiantes, maestros, materias y pagos. La entidad STUDENT debe tener la información básica y poder registrar los pagos mensuales de cuotas por asignatura , este dato puedellevarse dentro o fuera de la entidad segun consideren, poder llevar el control de las materias que esta cursando, solo puede tomar 5 materias a la vez, mostrar cuánto tiene que pagar por mes y llevar la calificacion de cada asigantura para cada materia. La entidad TEACHERS debe tener la información básica del maestro, llevar dentro o fuera de la entidad cuanto tiene que cobrar por las materias que imparte, su cuota es del 80% del valor de la cuota que paga el alumno, no puede impartir más de 5 materias por semana. La entidad SUBJECTS debe tener minimo una descripción y costo mensual de la misma El administrador debe poder relacionar a los alumnos con las asignaturas que va a cursar y a los profesor con las asiganturas que imparten, esto puede ser visto por maestros para ver que asiganturas imparte y estudiantes para saber cuales debe cursar.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Teacher role
 
-## Contributing
+Debe poder editar el perfil del estudiante y en cada asignatura que este tiene tomada pueda colocar las notas correspondientes, como asi tambien saber cuantos alumnos tiene por clase. Poder ver según la cantidad de asignaturas que imparte y estudiantes cuanto debe cobrar al mes. Tiene que poder tomar o borrar asiganturas que tiene asignadas.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Student role
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Debe poder ver las asignaturas que debe cursar, solo agregar pero no quitar de su perfil asignaturas, ver cuanto debe pagar mensual según cuales tome.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+##  REQUISITOS PREVIOS
+ 
+ - <a href="https://www.mysql.com/">MySQL</a>
+ - <a href="https://www.php.net/downloads/">PHP 8.1</a>
+ - <a href="https://getcomposer.org/">Composer</a>
+ - <a href="https://www.apache.org/">APACHE</a>
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Acceso a través de servidor en producción
+
+<a href="http://desafiocursos.ddns.net:8000">Courses platform</a>
+
+## Credenciales:
+
+- Admin
+
+    ``` sh
+    usuario: admin@gmail.com
+    contraseña: 12345678
+	```
+
+
+Para acceder a los demás usuarios registrados se puede navegar en las secciones Admins, Teachers, Students para verificar la dirección de correo con la que están registrados. Las contraseñas para todos los usuarios es '12345678'
+
+## Instalación en entorno local
+
+ - Clonar el repositorio, preferentemente en  ```/var/www/```:
+	
+	``` sh
+	git clone https://github.com/andresmza/seniority_assessment_project.git
+	```
+
+- Una vez dentro del directorio del proyecto ejecutar los siguientes comandos:
+
+    ``` sh
+	composer install
+	composer update
+    cp .env.example .env
+    php artisan key:generate
+	```
+
+- Crear la base de datos:
+
+    ``` sh
+	CREATE DATABASE desafio;
+	```
+
+- Ejecutar las migraciones:
+
+    ``` sh
+	php artisan migrate --seed
+	```
+
+- Ejecutar los siguientes comandos:
+
+    ``` sh
+	npm install -g npm@8.19.2
+    npm run dev
+	```
+
+
+##  Diagrama Entidad Relación
+
+![DER](https://raw.githubusercontent.com/andresmza/seniority_assessment_project/master/public/diagrama_entidad_relacion.png)
