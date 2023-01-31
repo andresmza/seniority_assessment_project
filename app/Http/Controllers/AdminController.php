@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Auth;
+
 // use Cmixin\EnhancedPeriod;
 
 class AdminController extends Controller
@@ -16,6 +18,10 @@ class AdminController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+
         return view('admins/index', [
             'admins' => User::role('admin')->get(),
         ]);
@@ -28,6 +34,10 @@ class AdminController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+
         return view('admins/create');
     }
 
@@ -39,6 +49,10 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
 
         $validated = $request->validate([
             'name' => 'required|max:255',
@@ -70,6 +84,10 @@ class AdminController extends Controller
      */
     public function show(User $admin)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+
         if ($admin) {
             return response()->json($admin, 200);
         } else {
@@ -85,6 +103,10 @@ class AdminController extends Controller
      */
     public function edit(User $admin)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+        
         if ($admin->hasRole('admin')) {
             return view('admins.edit', compact('admin'));
         } else {
@@ -103,6 +125,10 @@ class AdminController extends Controller
      */
     public function update(Request $request, User $admin)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+
         $validated = $request->validate([
             'name' => 'required|max:255',
             'lastname' => 'required|max:255',
@@ -123,6 +149,10 @@ class AdminController extends Controller
      */
     public function destroy(User $admin)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+        
         $admin->delete();
 
         if ($admin) {

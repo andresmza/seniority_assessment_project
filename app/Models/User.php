@@ -23,7 +23,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
-    // use SoftDeletes;
+    use SoftDeletes;
 
 
     /**

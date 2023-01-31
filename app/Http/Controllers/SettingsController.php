@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Settings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
@@ -14,6 +15,10 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+        
         $settings = Settings::find(1);
         // dd($settings);
         return view('settings.index', ['settings' => $settings]);
@@ -59,6 +64,10 @@ class SettingsController extends Controller
      */
     public function edit(Settings $settings)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+
         $settings = Settings::find(1);
         // dd($settings);
         return view('settings.edit', compact('settings'));
@@ -73,6 +82,10 @@ class SettingsController extends Controller
      */
     public function update(Request $request)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.index');
+        }
+        
         $validated = $request->validate([
             'max_courses_per_student' => 'required|integer|between:0,100',
             'max_courses_per_teacher_per_week' => 'required|integer|between:0,100',

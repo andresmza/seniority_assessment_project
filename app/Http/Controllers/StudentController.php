@@ -49,6 +49,10 @@ class StudentController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('students.index');
+        }
+
         return view('students/create');
     }
 
@@ -60,6 +64,10 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('students.index');
+        }
 
         $validated = $request->validate([
             'name' => 'required|max:255',
@@ -126,6 +134,10 @@ class StudentController extends Controller
      */
     public function edit(User $student)
     {
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('students.index');
+        }
+
         if($student->hasRole('student')) {
             return view('students.edit', compact('student'));
         } else {

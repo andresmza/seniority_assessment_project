@@ -1,5 +1,16 @@
 $(function() {
+    $('#closeShowCourse').on('click', function() {
+        $('#showCourse').attr('checked', false);
+    })
 
+    $('#closeEditCourse').on('click', function() {
+        $('#showEditCourse').attr('checked', false);
+    })
+
+    $('#closeRemoveCourse').on('click', function() {
+        console.log('object')
+        $('#showRemoveCourse').attr('checked', false);
+    })
     })
 
     function showCourse(courseId) {
@@ -82,14 +93,4 @@ $(function() {
         })
     }
     
-    $('#closeShowCourse').on('click', function() {
-        $('#showCourse').attr('checked', false);
-    })
-
-    $('#closeEditCourse').on('click', function() {
-        $('#showEditCourse').attr('checked', false);
-    })
-
-    $('#closeRemoveCourse').on('click', function() {
-        $('#showRemoveCourse').attr('checked', false);
-    })
+    

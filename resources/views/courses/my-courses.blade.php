@@ -35,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-{{-- {{ dd($courses); }} --}}
+
                             @foreach ($courses as $course)
                                 <tr>
                                     <td>{{ $course->subject->name }}</td>

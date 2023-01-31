@@ -45,7 +45,7 @@
                                                 <form action="/students/calification" method="POST">
                                                     @csrf
                                                     {{-- @method('PUT') --}}
-                                                    <input type="number" max="10" min="0"
+                                                    <input type="number" max="100" min="-100"
                                                         name="final_calification"
                                                         value="{{ $student->final_calification }}" style="width: 10ch;"
                                                         required>

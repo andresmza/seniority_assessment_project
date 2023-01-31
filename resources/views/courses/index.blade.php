@@ -7,6 +7,12 @@
         color: red;
     }
 </style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">  </script>
+<script src="{{ asset('js/course.js') }}"></script>
+<script>
+    const _token = "{{ csrf_token() }}";
+</script>
+
 
 <x-app-layout>
 
@@ -14,8 +20,8 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-                    <label for="createCourse" class="btn modal-open">Create course</label>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 onclickmy-4">
+                    <label for="createCourse" class="btn modal-open my-4">Create course</label>
                     
                 </div>
 
@@ -35,13 +41,13 @@
                             </tr>
                         </thead>
                         <tbody>
-{{-- {{ dd($courses); }} --}}
                             @foreach ($courses as $course)
-                                <tr>
-                                    <td>{{ $course->subject->name }}</td>
-                                    <td>{{ $course->teacher->name }} {{ $course->teacher->lastname }}</td>
+                            @if(isset($course->subject->name))
+				<tr>
+                                    <td>{{ $course->subject->name ?? ''}}</td>
+                                    <td>{{ $course->teacher->name ?? ''}} {{ $course->teacher->lastname ?? ''}}</td>
                                     <td>{{ $course->students->count() }} students</td>
-                                    <td>{{ $course->subject->duration }} months</td>
+                                    <td>{{ $course->subject->duration ?? '' }} months</td>
                                     <td>{{ $course->start_date }}</td>
                                     <td>{{ $course->end_date }}</td>
                                     <td>
@@ -54,6 +60,7 @@
                                     </button>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
 
                         </tbody>
@@ -94,8 +101,6 @@
 @include('courses/modal-create')
 
 
-
-
 @if (session('info'))
     <script>
         toastr['success']('{{session('info')}}');
@@ -109,8 +114,5 @@
 @endif
 
 
-<script>
-    const _token = "{{ csrf_token() }}";
-</script>
 
-<script src="{{ asset('js/course.js') }}"></script>
+

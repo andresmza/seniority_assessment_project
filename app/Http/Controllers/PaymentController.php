@@ -50,6 +50,10 @@ class PaymentController extends Controller
                 'pending_balance' => $pending_balance,
             ]);
         }
+
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('courses.index');
+        }
     }
 
     /**
@@ -71,6 +75,10 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('courses.index');
+        }
+
         $course_user = CourseUser::find($request->id);
 
         $payment = Payment::where('course_user_id', $course_user->id)->where('payment_date', null)->orderBy('id', 'asc')->first();
@@ -87,6 +95,10 @@ class PaymentController extends Controller
 
     public function payPending(Request $request)
     {
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('admins.index');
+        }
+
         // dd($request);
         $percentage = Settings::find(1)->first()->percentage_by_subject;
         $date = Carbon::now()->format('Y-m-d H:i:s');

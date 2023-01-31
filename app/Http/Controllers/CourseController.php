@@ -83,10 +83,16 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return redirect()->route('courses.index');
+        }
+
+        $course_start_date = Carbon::now()->startOfMonth()->addMonth()->addDay(-1)->format('Y-m-d');
+
         $validated = $request->validate([
             'subject_id' => 'required',
             'teacher_id' => 'required',
-            'start_date' => 'required',
+            'start_date' => 'required|after:'. $course_start_date,
         ]);
 
         $subject = Subject::find($request->subject_id);
@@ -134,9 +140,11 @@ class CourseController extends Controller
         } while ($weeks[$n] < $end_week);
 
         // dd($available_date, Carbon::parse($weeks[$n - 1])->format('Y-m-d'), Carbon::parse($weeks[$n])->format('Y-m-d'), $course_start_week, $course_end_week, $request->all());
-
+        // $subject = Subject::find()->first();
+        // $teacher = User::find()->first();
 
         if ($available_date) {
+
             Course::create([
                 'subject_id' => $request->subject_id,
                 'teacher_id' => $request->teacher_id,
@@ -158,6 +166,10 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('courses.index');
+        }
 
         $payments = Payment::getPaymentsByCourse($course->id);
         $students = User::getStudentsByCourse($course->id);
@@ -216,12 +228,20 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('courses.index');
+        }
+
         $course->delete();
         return response()->json([], 200);
     }
 
     public function enroll(Request $request)
     {
+
+        if (Auth::user()->hasRole('teacher')) {
+            return redirect()->route('courses.index');
+        }
 
         $course = Course::find($request->course_id);
         $max_courses_per_student = Settings::find(1)->max_courses_per_student;
@@ -261,6 +281,10 @@ class CourseController extends Controller
 
     public function unsuscribe($id)
     {
+        // if (!Auth::user()->hasRole('admin')) {
+        //     return redirect()->route('courses.index');
+        // }
+
         $course_user = CourseUser::where('id', $id)->withTrashed();
 
         $payments = Payment::where('course_user_id', $id)->where('payment_date', null)->delete();
@@ -273,6 +297,18 @@ class CourseController extends Controller
 
     public function setCalification(Request $request)
     {
+        if (!Auth::user()->hasRole('teacher')) {
+            return redirect()->route('courses.index');
+        }
+
+        if($request->final_calification < 0 || $request->final_calification > 10){
+            return redirect()->route('courses.index');
+        }
+
+        $validated = $request->validate([
+            'final_calification' => 'min:0|max:10',
+        ]);        
+
         $course_user = CourseUser::where('id', $request->course_user_id)->first();
         $course_user->final_calification = intval($request->final_calification);
         $course_user->save();
